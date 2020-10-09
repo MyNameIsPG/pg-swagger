@@ -28,11 +28,21 @@ function generate(data: any) {
 	for (const key in list) {
 		for (const key1 in list[key]) {
 			let api_name = smallTurnHump(data.basePath + key);
-			path += `<div style="font-size: 16px; line-height: 22px;">
-				<div>/** ${list[key][key1]["summary"]} */</div>
-				<div>export const ${api_name} = data => request("${data.basePath}${key}", data, "${key1.toUpperCase()}")</div>
-				<br>
-			</div>`;
+			let isThereAParameter = key.match(/{([^}]*)}/);
+			if (isThereAParameter) {
+				let str = key.slice(0, isThereAParameter.index);
+				path += `<div style="font-size: 16px; line-height: 22px;">
+					<div>/** ${list[key][key1]["summary"]} */</div>
+					<div>export const ${api_name} = ${isThereAParameter[1]} => request("${data.basePath}${str}" + ${isThereAParameter[1]}, null, "${key1.toUpperCase()}")</div>
+					<br>
+				</div>`;
+			} else {
+				path += `<div style="font-size: 16px; line-height: 22px;">
+					<div>/** ${list[key][key1]["summary"]} */</div>
+					<div>export const ${api_name} = data => request("${data.basePath}${key}", data, "${key1.toUpperCase()}")</div>
+					<br>
+				</div>`;
+			}
 		}
 	}
 
