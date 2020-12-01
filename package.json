@@ -2,7 +2,7 @@
 	"name": "pg-swagger",
 	"displayName": "pg-swagger",
 	"description": "基于swagger api 文档生成js api接口",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"publisher": "pengg",
 	"engines": {
 		"vscode": "^1.49.0"
